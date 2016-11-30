@@ -1,0 +1,94 @@
+.numberContainer {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+	border-radius: 3px;
+	background-color: rgba(149, 158, 183, 0.6);
+	color: rgba(52, 58, 76, 0.90);
+}
+
+.numberBox {
+	font-size: 30px;
+}
+
+.numberPlaceholder {
+	text-decoration: none;
+}
+
+
+.lightbox img, .lightbox video{
+	height: auto;
+	width: auto;
+	max-width: 100%;
+	position:absolute;
+  top:0;
+  bottom:0;
+	left:0;
+	right:0;
+  margin:auto auto;
+}
+
+.lightbox {
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.65);
+}
+
+.lightbox-content {
+	position: fixed;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.65);
+	overflow: visible;
+}
+
+.navButtons {
+    border: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    height: 34px;
+    padding: 40px 30px;
+    margin: auto;
+    cursor: pointer;
+    opacity: 0.85;
+}
+.navButtons:hover {
+    opacity: 1;
+}
+
+.navButtons:active {
+    opacity: 0.85;
+}
+
+.navButtons:focus {
+	outline: none;
+}
+
+.navButtonPrev {
+    left: 0;
+    background: rgba(0, 0, 0, 0.2) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjM0Ij48cGF0aCBkPSJtIDE5LDMgLTIsLTIgLTE2LDE2IDE2LDE2IDEsLTEgLTE1LC0xNSAxNSwtMTUgeiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg==') no-repeat center;
+}
+
+.navButtonNext {
+    right: 0;
+    background: rgba(0, 0, 0, 0.2) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjM0Ij48cGF0aCBkPSJtIDEsMyAyLC0yIDE2LDE2IC0xNiwxNiAtMSwtMSAxNSwtMTUgLTE1LC0xNSB6IiBmaWxsPSIjRkZGIi8+PC9zdmc+') no-repeat center;
+}
+
+.navButtonClose {
+    position: absolute;
+    margin-top: 0px;
+    right: 0;
+    top: 0;
+    background: rgba(0,0,0,0.2) url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIj48cGF0aCBkPSJtIDEsMyAxLjI1LC0xLjI1IDcuNSw3LjUgNy41LC03LjUgMS4yNSwxLjI1IC03LjUsNy41IDcuNSw3LjUgLTEuMjUsMS4yNSAtNy41LC03LjUgLTcuNSw3LjUgLTEuMjUsLTEuMjUgNy41LC03LjUgLTcuNSwtNy41IHoiIGZpbGw9IiNGRkYiLz48L3N2Zz4=') no-repeat center;
+}
