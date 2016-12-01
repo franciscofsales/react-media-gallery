@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 class MediaItem extends Component {
 
   render() {
-    if(this.props.selected.type != 'video')
-      return (<img src={this.props.selected.src} />)
+    if(this.props.selected.display_as !== 'video')
+      return (<img role="presentation" src={this.props.selected.src} />)
 
     return (
       <video controls autoPlay>

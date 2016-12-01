@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import TweenLite from 'gsap';
 import {findDOMNode} from 'react-dom';
-import TransitionGroup from 'react-addons-transition-group';
 import MediaItem from './MediaItem';
-import './style.css';
+import './style.scss';
 
 const KEYS = {
     ESC:         27,
@@ -61,12 +60,12 @@ class Lightbox extends Component {
   selectItem(direction) {
     let index = this.props.media.indexOf(this.props.current);
 
-    if(index === 0 && direction == 'left')
+    if(index === 0 && direction === 'left')
       return true;
-    if(index === this.props.media.length - 1 && direction == 'right')
+    if(index === this.props.media.length - 1 && direction === 'right')
       return true;
 
-    if(direction == 'left')
+    if(direction === 'left')
       index--;
     else
       index++;

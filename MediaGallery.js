@@ -1,14 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import Lightbox from './Lightbox';
-import './style.css';
+import './style.scss';
 
-const style = {
-   display: 'block',
-   margin: 4,
-
-   float: 'left'
-}
 
 class MediaGallery extends Component {
   constructor() {
@@ -90,47 +84,46 @@ class MediaGallery extends Component {
     let heightSize = 100;
 
     if(this.state.galleryRef){
-      if(this.props.media.length > 3)
+      if(this.props.media.length > 2)
         rowLimit = 2;
       else
         rowLimit = 1;
         // rowLimit = Math.ceil( Math.sqrt(this.props.media.length) );
 
       let imageLengthEval = Math.min(this.props.media.length, 4);
-      widthSize = Math.floor(this.state.galleryRef.clientWidth/rowLimit)-(8 * (rowLimit - 1));
-      heightSize = Math.floor(this.state.galleryRef.parentNode.clientHeight/(Math.ceil(imageLengthEval/rowLimit) ) ) - (8 * (Math.floor(imageLengthEval/rowLimit) - 1));
-
+      widthSize = Math.round(this.state.galleryRef.clientWidth/rowLimit) - rowLimit;
+      heightSize = Math.floor(this.state.galleryRef.parentNode.clientHeight/(Math.ceil(imageLengthEval/rowLimit) ) ) - 2 * rowLimit;
 
     }
 
 
 
     for (let i=0; i < this.props.media.length; i++){
-
         if(i < 3 || this.props.media.length < 5) {
+          let isBigger = (i===0 && this.props.media.length % 2 !== 0 && this.props.media.length > 1);
           if (this.props.disableLightbox){
             mediaPreviewNodes.push(
-          	 <div key={i} style={style}>
-          	    <img src={this.props.media[i].src} style={{display:'block', border:0, borderRadius:3, objectFit: 'cover', height: heightSize, width: widthSize}} />
+          	 <div key={i} className="picContainer">
+          	    <img role="presentation" src={this.props.media[i].thumb} className="thumbItem" height={heightSize} width={isBigger ? widthSize*2: widthSize - Math.ceil(rowLimit/2)} />
           	 </div>
             );
           }
           else {
             lightboxMedia.push(this.props.media[i]);
-            if(this.props.media[i].type != 'video'){
+            if(this.props.media[i].display_as !== 'video'){
       		    mediaPreviewNodes.push(
-          			 <div key={i} style={style}>
+          			 <div key={i} className="picContainer">
           			    <a href="#" className={i} onClick={this.openLightbox.bind(this, i)}>
-                      <img src={this.props.media[i].src} style={{display:'block', borderRadius:3, border:0, objectFit: 'cover'}} height={heightSize} width={widthSize}/>
+                      <img role="presentation" src={this.props.media[i].thumb} className="thumbItem" height={heightSize} width={isBigger ? widthSize*2: widthSize - Math.ceil(rowLimit/2)}/>
                     </a>
           			 </div>
       		    );
             }
             else{
               mediaPreviewNodes.push(
-          			 <div key={i} style={style}>
+          			 <div key={i} className="picContainer">
           			    <a href="#" className={i} onClick={this.openLightbox.bind(this, i)}>
-                      <video style={{display:'block', borderRadius:3, border:0, objectFit: 'cover'}} height={heightSize} width={widthSize} controls>
+                      <video className="thumbItem" height={heightSize} width={widthSize} controls preload="auto">
                         <source src={this.props.media[i].src} type="video/mp4"/>
                       </video>
                     </a>
@@ -142,7 +135,7 @@ class MediaGallery extends Component {
         else if(i===3 && this.props.media.length > 4){
           if (this.props.disableLightbox){
             mediaPreviewNodes.push(
-          	 <div key={i} style={style}>
+          	 <div key={i} className="picContainer">
           	    <div style={{height: heightSize, width: widthSize}}  className="numberContainer">
                   <div className="numberContainer">+ {this.props.media.length - 3}</div>
                 </div>
@@ -152,7 +145,7 @@ class MediaGallery extends Component {
           else{
             lightboxMedia.push(this.props.media[i]);
     		    mediaPreviewNodes.push(
-        			 <div key={i} style={style}>
+        			 <div key={i} className="picContainer">
         			    <a href="#" className="numberPlaceholder" onClick={this.openLightbox.bind(this, i)}>
                     <div style={{height: heightSize, width: widthSize}}  className="numberContainer">
                       <div className="numberBox">+ {this.props.media.length - 3}</div>
@@ -162,14 +155,9 @@ class MediaGallery extends Component {
     		    );
           }
         }
-
-
-
-
-
     }
 	  return(
-      <div ref={(galleryRef) => { if(!this.state.galleryRef) this.setState({galleryRef}); }} style={{flex:1, alignSelf:'stretch'}}>
+      <div ref={(galleryRef) => { if(!this.state.galleryRef) this.setState({galleryRef}); }} className="mediaGallerContainer">
         {this.renderGallery(mediaPreviewNodes, lightboxMedia)}
       </div>
     );
