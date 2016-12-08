@@ -7,7 +7,7 @@
 
 .thumbItem {
 	display: block;
-  object-fit: cover;
+  	object-fit: cover;
 }
 
 
@@ -15,6 +15,11 @@
 	float:left;
 	display: block;
 	padding:1px;
+
+	> a {
+		display: block;
+		overflow: hidden;
+	}
 }
 
 .numberContainer {

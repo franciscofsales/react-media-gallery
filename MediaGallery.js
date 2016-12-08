@@ -9,26 +9,53 @@ class MediaGallery extends Component {
      super();
      this.openLightbox = this.openLightbox.bind(this);
      this.selectItem = this.selectItem.bind(this);
+     this.updateDimensions = this.updateDimensions.bind(this);
      this.state = {
          currentMedia: null,
-         containerWidth: 0,
+         containerWidth: null,
          galleryRef: null,
          lightboxIsOpen: false
      };
 
   }
+
+  updateDimensions(){
+    //adjust gallery to container
+    this.setState({containerWidth: this.state.galleryRef.parentNode.clientWidth});
+  }
+
+  componentDidMount() {
+    //when window is resized, adjust galleries
+    window.addEventListener("resize", this.updateDimensions);
+   }
+
+  componentWillUpdate(nextProps, nextState){
+    //forcing first adjustment
+    if(nextState.galleryRef){
+      if(!this.state.containerWidth){
+        this.setState({containerWidth: nextState.galleryRef.parentNode.clientWidth});
+        return true;
+      }
+    }
+  }
+
+   componentWillUnmount() {
+     //remove window resize listener
+     window.removeEventListener("resize", this.updateDimensions);
+   }
+
   openLightbox(index, event){
-        event.preventDefault();
-        this.setState({
-    	    currentMedia: this.props.media[index],
-          lightboxIsOpen: true
-        });
+    event.preventDefault();
+    this.setState({
+      currentMedia: this.props.media[index],
+      lightboxIsOpen: true
+    });
   }
   closeLightbox() {
-        this.setState({
-           currentMedia: null,
-           lightboxIsOpen: false,
-        });
+    this.setState({
+       currentMedia: null,
+       lightboxIsOpen: false,
+    });
   }
   selectItem(item, event){
     if(event)
@@ -83,7 +110,7 @@ class MediaGallery extends Component {
     let widthSize = 100;
     let heightSize = 100;
 
-    if(this.state.galleryRef){
+    if(this.state.containerWidth){
       if(this.props.media.length > 2)
         rowLimit = 2;
       else
@@ -91,8 +118,8 @@ class MediaGallery extends Component {
         // rowLimit = Math.ceil( Math.sqrt(this.props.media.length) );
 
       let imageLengthEval = Math.min(this.props.media.length, 4);
-      widthSize = Math.round(this.state.galleryRef.clientWidth/rowLimit) - rowLimit;
-      heightSize = Math.floor(this.state.galleryRef.parentNode.clientHeight/(Math.ceil(imageLengthEval/rowLimit) ) ) - 2 * rowLimit;
+      widthSize = Math.round(this.state.containerWidth/rowLimit) - rowLimit;
+      heightSize = Math.floor(this.state.galleryRef.clientHeight/(Math.ceil(imageLengthEval/rowLimit) ) ) - 2 * rowLimit;
 
     }
 
