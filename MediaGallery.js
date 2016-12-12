@@ -124,10 +124,10 @@ class MediaGallery extends Component {
     }
 
 
-
+    const randIndex = Math.floor(Math.random()) ? 0 : 2;
     for (let i=0; i < this.props.media.length; i++){
         if(i < 3 || this.props.media.length < 5) {
-          let isBigger = (i===0 && this.props.media.length % 2 !== 0 && this.props.media.length > 1);
+          let isBigger = (i===randIndex && this.props.media.length == 3);
           if (this.props.disableLightbox){
             mediaPreviewNodes.push(
           	 <div key={i} className="picContainer">
@@ -150,7 +150,7 @@ class MediaGallery extends Component {
               mediaPreviewNodes.push(
           			 <div key={i} className="picContainer">
           			    <a href="#" className={i} onClick={this.openLightbox.bind(this, i)}>
-                      <video className="thumbItem" height={heightSize} width={widthSize} controls preload="auto">
+                      <video className="thumbItem" height={heightSize} width={isBigger ? widthSize*2: widthSize - Math.ceil(rowLimit/2)} controls preload="auto">
                         <source src={this.props.media[i].src} type="video/mp4"/>
                       </video>
                     </a>
@@ -184,7 +184,7 @@ class MediaGallery extends Component {
         }
     }
 	  return(
-      <div ref={(galleryRef) => { if(!this.state.galleryRef) this.setState({galleryRef}); }} className="mediaGallerContainer">
+      <div ref={(galleryRef) => { if(!this.state.galleryRef) this.setState({galleryRef}); }} className="mediaGalleryContainer">
         {this.renderGallery(mediaPreviewNodes, lightboxMedia)}
       </div>
     );
